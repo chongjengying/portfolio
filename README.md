@@ -11,9 +11,18 @@ npm run dev
 
 ## Cloudflare Pages deployment
 
-This project uses **static export**. The build writes files to the **`out`** folder. Do **not** use `opennextjs-cloudflare` for this repo.
+This project uses **static export**. The build writes files to the **`out`** folder.
 
-### Dashboard settings (Cloudflare Pages)
+### Important: `wrangler deploy` vs `wrangler pages deploy`
+
+- **Workers:** `wrangler deploy` — do **not** use this for this site.
+- **Pages (this repo):** `wrangler pages deploy` only.
+
+This repo **does not** include a root `wrangler.toml`, so Cloudflare’s Git build is less likely to treat the project as a Worker and run the wrong command.
+
+If you still see: *“you have run `wrangler deploy` on a Pages project”*, open the Pages project in the dashboard and clear any **Deploy command** that runs `wrangler deploy`. For a static `out/` build, that field should usually be **empty**.
+
+### Dashboard settings (Git-connected Pages)
 
 | Setting | Value |
 |--------|--------|
@@ -21,23 +30,21 @@ This project uses **static export**. The build writes files to the **`out`** fol
 | Build command | `npm run build` |
 | Build output directory | `out` |
 | Root directory | `/` (repo root) |
+| Deploy command | *(leave empty)* |
 
-**Do not** set the build command to `npx opennextjs-cloudflare build`. That adapter is for full Next.js on Workers and expects a different build layout; it will fail with errors about `.next/standalone/.../pages-manifest.json` when used with `output: "export"`.
+Do **not** use `npx opennextjs-cloudflare build` for this repo (that path targets full Next.js on Workers, not static export).
 
-For **Git-connected** Pages builds, leave **Deploy command** empty unless you know you need one. The platform uploads `out/` after the build. Never set the deploy step to `wrangler deploy` (that is for Workers, not Pages).
+### Deploy from your machine (Pages only)
 
-### Deploy from your machine (Wrangler, static)
+1. Set your Pages project name once in **`package.json`** → **`config.cloudflare_pages_project`** (must match an existing Cloudflare Pages project).
 
-`wrangler.toml` sets `pages_build_output_dir = "./out"` and the Pages **project name** (`name`). Edit `name` to match your Cloudflare project.
-
-**First time only — create the Pages project** (pick any unused name; must match `name` in `wrangler.toml`):
+2. Log in (first time only):
 
 ```bash
 npx wrangler login
-npx wrangler pages project create YOUR_PROJECT_NAME --production-branch main
 ```
 
-**Build and publish** (uploads `out/` with **Pages** only — not `wrangler deploy`):
+3. Build and upload static files:
 
 ```bash
 npm run pages:publish
@@ -49,7 +56,7 @@ Or deploy only (after `npm run build:cf`):
 npm run pages:deploy
 ```
 
-If you see a warning about **`wrangler deploy` on a Pages project**, you ran the wrong command. This repo uses **`wrangler pages deploy`** only (via the scripts above).
+These scripts run **`wrangler pages deploy out`** via `scripts/cf-pages-deploy.cjs` — never `wrangler deploy`.
 
 ### Optional: preview the static site locally
 
