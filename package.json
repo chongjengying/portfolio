@@ -7,7 +7,10 @@
     "build": "next build",
     "build:cf": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pages:deploy": "wrangler pages deploy",
+    "pages:publish": "npm run build:cf && wrangler pages deploy",
+    "pages:preview": "wrangler pages dev out"
   },
   "dependencies": {
     "framer-motion": "^12.35.0",
