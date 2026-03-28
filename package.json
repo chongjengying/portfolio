@@ -2,17 +2,19 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "config": {
-    "cloudflare_pages_project": "cjy-portfolio"
+    "cloudflare_pages_project": "portfolio"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:cf": "next build",
-    "start": "next start",
     "lint": "eslint",
+    "pages:build": "next build",
     "pages:deploy": "node scripts/cf-pages-deploy.cjs",
-    "pages:publish": "npm run build:cf && node scripts/cf-pages-deploy.cjs",
+    "pages:publish": "npm run pages:build && node scripts/cf-pages-deploy.cjs",
     "pages:preview": "wrangler pages dev out"
   },
   "dependencies": {

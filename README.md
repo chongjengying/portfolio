@@ -11,7 +11,9 @@ npm run dev
 
 ## Cloudflare Pages deployment
 
-This project uses **static export**. The build writes files to the **`out`** folder.
+This project is set up for **Cloudflare Pages** using **static HTML export** (no Node server, no OpenNext). `next build` writes the site to **`out/`**.
+
+**Node version:** `.nvmrc` pins **20** for local builds and matches what Cloudflare Pages should use (set **Environment variable** `NODE_VERSION` = `20` in the Pages project if your build image does not read `.nvmrc`).
 
 ### Important: `wrangler deploy` vs `wrangler pages deploy`
 
@@ -27,7 +29,7 @@ If you still see: *“you have run `wrangler deploy` on a Pages project”*, ope
 | Setting | Value |
 |--------|--------|
 | Framework preset | None (or Static / custom) |
-| Build command | `npm run build` |
+| Build command | `npm run build` (same as `npm run pages:build`) |
 | Build output directory | `out` |
 | Root directory | `/` (repo root) |
 | Deploy command | *(leave empty)* |
@@ -50,7 +52,7 @@ npx wrangler login
 npm run pages:publish
 ```
 
-Or deploy only (after `npm run build:cf`):
+Or deploy only (after `npm run pages:build` or `npm run build`):
 
 ```bash
 npm run pages:deploy

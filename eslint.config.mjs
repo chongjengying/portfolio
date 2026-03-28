@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // CommonJS deploy helper (Cloudflare Pages)
+    "scripts/cf-pages-deploy.cjs",
   ]),
 ]);
 
