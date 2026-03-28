@@ -8,7 +8,8 @@
     "build:cf": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy:cf": "wrangler pages deploy out",
+    "deploy:cf": "wrangler pages deploy",
+    "publish:cf": "npm run build:cf && wrangler pages deploy",
     "preview:cf": "wrangler pages dev out"
   },
   "dependencies": {
