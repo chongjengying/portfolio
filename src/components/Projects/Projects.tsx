@@ -1,88 +1,66 @@
+import Image from 'next/image';
 import styles from './Projects.module.css';
 
-const PROJECTS = [
+type LiveStatus = 'live' | 'development';
+
+const PROJECTS: Array<{
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  links: { github?: string; live?: string };
+  metric: string;
+  liveStatus: LiveStatus;
+}> = [
   {
     id: 'proj-1',
-    title: 'TEA Incident Log Analysis Workflow',
-    description:
-      'Built a repeatable Linux-based troubleshooting workflow using grep, tail, and awk to analyze production logs and speed up root cause identification for critical incidents.',
-    tags: ['Linux', 'Bash', 'Production Support', 'Incident Management'],
-    featured: true,
-    links: { github: 'https://github.com/chongjengying', live: '#' },
-    metric: '25% faster RCA',
-  },
-  {
-    id: 'proj-2',
-    title: 'SQL Reconciliation Reporting',
-    description:
-      'Developed SQL-based reconciliation reports to identify orphan orders and data mismatches, improving shipment consistency and reducing operational delays.',
-    tags: ['SQL', 'Oracle', 'SQL Server', 'Data Validation'],
-    featured: true,
-    links: { github: 'https://github.com/chongjengying', live: '#' },
-    metric: '15% fewer delayed shipments',
-  },
-  {
-    id: 'proj-3',
-    title: "Touch 'n Go Toll Integration Support",
-    description:
-      'Supported integration rollout for automated toll expense tracking between transport operations and enterprise systems, reducing manual reconciliation issues.',
-    tags: ['Integration Support', 'TEA', 'Cross-border Logistics'],
-    featured: true,
-    links: { github: 'https://github.com/chongjengying', live: '#' },
-    metric: '20% fewer reconciliation errors',
-  },
-  {
-    id: 'proj-7',
     title: 'Dev Encoding Toolkit',
     description:
       'Built a developer encoding toolkit with Next.js, including practical encoding utilities and a deploy-ready frontend workflow.',
+    image: '/projects/dev-encoding-toolkit.png',
     tags: ['Next.js', 'TypeScript', 'Developer Tools'],
-    featured: false,
     links: {
       github: 'https://github.com/chongjengying/dev-encoding-toolkit',
       live: 'https://dev-encoding-toolkit.pages.dev/',
     },
     metric: 'Open-source project',
+    liveStatus: 'live',
   },
   {
-    id: 'proj-8',
+    id: 'proj-2',
     title: 'Pet E-commerce Platform',
     description:
-      'Developed a pet e-commerce platform for booking and selling pet products such as food, snacks, and accessories, with responsive product pages and shopping flows.',
+      'Built a full-stack pet e-commerce platform with product management, shopping cart, and responsive UI. Implemented dynamic product pages and optimized performance for smooth user experience.',
+    image: '/projects/pet-ecommerce.png',
     tags: ['Next.js', 'TypeScript', 'E-commerce'],
-    featured: false,
     links: { github: 'https://github.com/chongjengying/pet-ecommerce' },
     metric: 'Personal project',
+    liveStatus: 'development',
   },
   {
-    id: 'proj-4',
-    title: 'Angular UI Enhancements for TEA',
-    description:
-      'Implemented front-end improvements in Angular to improve usability for operation teams while maintaining production stability and release quality.',
-    tags: ['Angular', 'TypeScript', 'UI Enhancement'],
-    featured: false,
-    links: { github: 'https://github.com/chongjengying' },
-    metric: 'Improved operator UX',
-  },
-  {
-    id: 'proj-5',
+    id: 'proj-3',
     title: 'Android Car Park Reservation System',
     description:
       'Developed a full-stack Android app with role-based authentication and concurrent booking logic to prevent double-booking.',
+    image: '/projects/carpark-android.png',
     tags: ['Java', 'Firebase Auth', 'Realtime Database'],
-    featured: false,
-    links: { github: 'https://github.com/chongjengying', live: '#' },
+    links: { github: 'https://github.com/chongjengying/carparkapp', live: '#' },
     metric: 'Final year project',
+    liveStatus: 'development',
   },
   {
-    id: 'proj-6',
-    title: 'Programming Curriculum for Young Learners',
+    id: 'proj-4',
+    title: 'Personal Portfolio Website',
     description:
-      'Designed project-based lesson tracks in Roblox, Python, and Minecraft to simplify core programming concepts for students aged 8 to 16.',
-    tags: ['Python', 'Roblox Studio', 'Curriculum Design'],
-    featured: false,
-    links: { github: 'https://github.com/chongjengying' },
-    metric: 'Part-time teaching',
+      'Responsive portfolio built with Next.js and static export, featuring project showcases, experience timeline, and Cloudflare Pages deployment.',
+    image: '/projects/portfolio-site.png',
+    tags: ['Next.js', 'TypeScript', 'Cloudflare Pages'],
+    links: {
+      live: 'https://cjy-portfolio.pages.dev/',
+    },
+    metric: 'This site',
+    liveStatus: 'live',
   },
 ];
 
@@ -101,32 +79,72 @@ const ExternalIcon = () => (
 );
 
 export default function Projects() {
-  const featured = PROJECTS.filter((p) => p.featured);
-  const other = PROJECTS.filter((p) => !p.featured);
-
   return (
-    <section className="section" id="projects">
+    <section className={`section ${styles.projects}`} id="projects">
       <div className="container">
         <p className="section-label">What I Have Built</p>
         <h2 className="section-title">
           Selected <span>Projects</span>
         </h2>
         <p className="section-subtitle">
-          Software engineering and operations-focused work from enterprise support and project delivery.
+          Open-source tools, full-stack web apps, and mobile projects.
         </p>
 
+        <div className={styles.liveStatusKey} role="note" aria-label="Live status legend">
+          <span className={styles.liveStatusKeyTitle}>Live status</span>
+          <span className={styles.liveStatusKeyItem}>
+            <span className={styles.statusDotLive} aria-hidden />
+            Live
+          </span>
+          <span className={styles.liveStatusKeySep} aria-hidden>
+            |
+          </span>
+          <span className={styles.liveStatusKeyItem}>
+            <span className={styles.statusDotDev} aria-hidden />
+            In development
+          </span>
+        </div>
+
         <div className={styles.featuredGrid}>
-          {featured.map((project) => (
+          {PROJECTS.map((project) => (
             <div key={project.id} id={project.id} className={`card ${styles.featuredCard}`}>
+              <div className={styles.cardMedia}>
+                <Image
+                  src={project.image}
+                  alt={`${project.title} project preview`}
+                  fill
+                  className={styles.cardImage}
+                  sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                />
+              </div>
               <div className={styles.cardTop}>
-                <span className={styles.metricBadge}>{project.metric}</span>
+                <div className={styles.cardTopLeft}>
+                  <span
+                    className={
+                      project.liveStatus === 'live' ? styles.cardStatusLive : styles.cardStatusDev
+                    }
+                  >
+                    {project.liveStatus === 'live' ? (
+                      <>
+                        <span className={styles.statusDotLive} aria-hidden />
+                        Live
+                      </>
+                    ) : (
+                      <>
+                        <span className={styles.statusDotDev} aria-hidden />
+                        In development
+                      </>
+                    )}
+                  </span>
+                  <span className={styles.metricBadge}>{project.metric}</span>
+                </div>
                 <div className={styles.cardLinks}>
                   {project.links.github && (
                     <a href={project.links.github} className={styles.iconLink} aria-label="GitHub" target="_blank" rel="noopener noreferrer">
                       <GitHubIcon />
                     </a>
                   )}
-                  {project.links.live && (
+                  {project.links.live && project.links.live !== '#' && (
                     <a href={project.links.live} className={styles.iconLink} aria-label="Live Demo" target="_blank" rel="noopener noreferrer">
                       <ExternalIcon />
                     </a>
@@ -144,76 +162,26 @@ export default function Projects() {
                   </span>
                 ))}
               </div>
-              {project.links.live && project.links.live !== '#' && project.links.github && (
+              {project.links.live && project.links.live !== '#' && (
                 <div className={styles.projectActions}>
                   <a
                     href={project.links.live}
-                    className={`btn btn-primary ${styles.actionBtn}`}
+                    className={`btn btn-primary ${styles.actionBtn} ${styles.actionBtnPrimary}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Demo
+                    <span className={styles.actionBtnLabel}>Demo</span>
                   </a>
-                  <a
-                    href={project.links.github}
-                    className={`btn btn-outline ${styles.actionBtn}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    GitHub
-                  </a>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <h3 className={styles.otherHeading}>More Engineering Work</h3>
-        <div className={styles.otherGrid}>
-          {other.map((project) => (
-            <div key={project.id} id={project.id} className={`card ${styles.otherCard}`}>
-              <div className={styles.cardTop}>
-                <span className={styles.folderIcon}>[]</span>
-                <div className={styles.cardLinks}>
                   {project.links.github && (
-                    <a href={project.links.github} className={styles.iconLink} aria-label="GitHub" target="_blank" rel="noopener noreferrer">
-                      <GitHubIcon />
+                    <a
+                      href={project.links.github}
+                      className={`btn btn-outline ${styles.actionBtn} ${styles.actionBtnOutline}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className={styles.actionBtnLabel}>GitHub</span>
                     </a>
                   )}
-                  {project.links.live && (
-                    <a href={project.links.live} className={styles.iconLink} aria-label="Live Demo" target="_blank" rel="noopener noreferrer">
-                      <ExternalIcon />
-                    </a>
-                  )}
-                </div>
-              </div>
-              <h3 className={styles.otherTitle}>{project.title}</h3>
-              <p className={styles.otherDesc}>{project.description}</p>
-              <div className={styles.cardTags}>
-                {project.tags.slice(0, 3).map((tag) => (
-                  <span key={tag} className="tag">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              {project.links.live && project.links.live !== '#' && project.links.github && (
-                <div className={styles.projectActions}>
-                  <a
-                    href={project.links.live}
-                    className={`btn btn-primary ${styles.actionBtn}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Demo
-                  </a>
-                  <a
-                    href={project.links.github}
-                    className={`btn btn-outline ${styles.actionBtn}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    GitHub
-                  </a>
                 </div>
               )}
             </div>

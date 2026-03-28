@@ -32,8 +32,9 @@ export default function About() {
               analysis with Java Spring Boot, and SQL-driven reconciliation and reporting improvements.
             </p>
             <p className={styles.para}>
-              I focus on reducing incident recovery time, improving delivery continuity, and translating
-              business and operational needs into practical technical solutions.
+              I focus on improving incident resolution time (MTTR), reducing reconciliation errors, ensuring
+              high availability, improving delivery continuity, and translating business and operational needs
+              into practical technical solutions.
             </p>
 
             <div className={styles.infoGrid}>

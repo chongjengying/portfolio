@@ -4,118 +4,292 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 20px 0;
-    transition: all 0.3s ease;
+    padding: 14px 0;
+    transition: padding 0.35s ease;
 }
 
 .nav.scrolled {
-    background: rgba(10, 10, 10, 0.92);
-    backdrop-filter: blur(16px);
-    padding: 12px 0;
-    border-bottom: 1px solid var(--black-border);
+    padding: 10px 0;
 }
 
-.inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* Logo */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    text-decoration: none;
-    font-family: var(--font-code);
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.logoSymbol {
-    color: var(--green);
-}
-
-.logoText {
-    color: var(--white);
-    letter-spacing: 0.05em;
-}
-
-/* Links */
-.links {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    list-style: none;
-}
-
-.link {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-    color: var(--white-dim);
-    font-size: 0.9rem;
-    font-weight: 500;
-    padding: 6px 10px;
-    border-radius: 6px;
-    transition: color 0.2s ease;
-    position: relative;
-}
-
-.link::after {
+.nav.scrolled::after {
     content: '';
     position: absolute;
-    bottom: 2px;
-    left: 10px;
-    right: 10px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     height: 1px;
-    background: var(--green);
-    transform: scaleX(0);
-    transition: transform 0.25s ease;
+    background: linear-gradient(90deg, transparent 0%, rgba(0, 255, 136, 0.28) 45%, transparent 100%);
+    pointer-events: none;
+    opacity: 0.9;
 }
 
-.link:hover,
-.link.active {
+.shell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.mobileBrand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+    padding: 4px 6px;
+    text-decoration: none;
+    flex-shrink: 0;
+    border-radius: 100px;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.mobileBrand:hover {
+    background: rgba(0, 255, 136, 0.08);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.12);
+}
+
+/* CJY mark — stays larger than section nav icons */
+.brandLogo {
+    width: 64px;
+    height: 64px;
+}
+
+/* ---------- Floating pill dock ---------- */
+.dock {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+    width: 100%;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 8px 12px 10px;
+    border-radius: 100px;
+    background: rgba(22, 22, 22, 0.72);
+    border: 1px solid rgba(0, 255, 136, 0.16);
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.55) inset,
+        0 6px 32px rgba(0, 0, 0, 0.45),
+        0 0 64px rgba(0, 255, 136, 0.04);
+    backdrop-filter: blur(22px) saturate(1.2);
+    -webkit-backdrop-filter: blur(22px) saturate(1.2);
+    transition:
+        background 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.nav.scrolled .dock {
+    background: rgba(12, 12, 12, 0.88);
+    border-color: rgba(0, 255, 136, 0.24);
+    box-shadow:
+        0 0 0 1px rgba(0, 255, 136, 0.07) inset,
+        0 12px 44px rgba(0, 0, 0, 0.55),
+        0 0 80px rgba(0, 255, 136, 0.06);
+}
+
+/* ---------- Icon + label nav ---------- */
+.links {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex: 1;
+    flex-wrap: nowrap;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+.drawerResume {
+    display: none;
+}
+
+.navItem {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: var(--white-dim);
+    padding: 3px 6px;
+    border-radius: 16px;
+    transition: transform 0.38s cubic-bezier(0.34, 1.35, 0.64, 1);
+}
+
+.navItem:hover {
+    transform: translateY(-2px);
+}
+
+.itemGlow {
+    position: absolute;
+    inset: -4px -2px -8px -2px;
+    border-radius: 22px;
+    background: linear-gradient(125deg, rgba(255, 198, 150, 0.95), rgba(90, 255, 180, 0.88));
+    opacity: 0;
+    filter: blur(18px);
+    transform: scale(0.82);
+    transition:
+        opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.45s cubic-bezier(0.34, 1.35, 0.64, 1);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.navItem:hover .itemGlow {
+    opacity: 0.38;
+    transform: scale(0.94);
+}
+
+.navItem.active .itemGlow {
+    opacity: 0.92;
+    transform: scale(1);
+}
+
+.itemInner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.iconSlot {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+}
+
+.iconHalo {
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: none;
+    transition:
+        background 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.navItem.active .iconHalo {
+    background: linear-gradient(145deg, #f3e4d4, #b8f5d8);
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.22);
+}
+
+.iconSvg {
+    position: relative;
+    z-index: 1;
+    width: 21px;
+    height: 21px;
     color: var(--green);
+    transition: color 0.32s ease, transform 0.32s ease;
 }
 
-.link:hover::after,
-.link.active::after {
-    transform: scaleX(1);
+.navItem:hover .iconSvg {
+    color: #5dffae;
 }
 
-.linkNum {
-    font-family: var(--font-code);
+.navItem.active .iconSvg {
+    color: #0f1412;
+    transform: scale(1.04);
+}
+
+.navItemLabel {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    transition: color 0.3s ease;
+}
+
+.navItem:hover .navItemLabel {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.navItem.active .navItemLabel {
+    color: #0f1412;
+}
+
+/* ---------- Resume orb (designer profile slot) ---------- */
+.resumeOrb {
+    position: relative;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    margin-left: 4px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 255, 136, 0.5);
+    background: rgba(0, 255, 136, 0.06);
+    display: grid;
+    place-items: center;
+    text-decoration: none;
     color: var(--green);
-    font-size: 0.75rem;
-    opacity: 0.8;
+    transition:
+        transform 0.35s cubic-bezier(0.34, 1.35, 0.64, 1),
+        border-color 0.3s ease,
+        box-shadow 0.35s ease,
+        background 0.3s ease;
 }
 
-.resumeBtn {
-    margin-left: 12px;
-    padding: 8px 20px !important;
-    font-size: 0.88rem !important;
+.resumeOrb:hover {
+    transform: scale(1.06);
+    border-color: var(--green);
+    box-shadow: 0 0 28px rgba(0, 255, 136, 0.35);
+    background: rgba(0, 255, 136, 0.12);
 }
 
-/* Burger */
+.resumeOrbGlow {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.35), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.resumeOrb:hover .resumeOrbGlow {
+    opacity: 1;
+}
+
+.resumeOrbIcon {
+    width: 19px;
+    height: 19px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Burger ---------- */
 .burger {
     display: none;
     flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
     cursor: pointer;
-    padding: 4px;
+    padding: 8px 7px;
+    margin-left: 2px;
+    transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.burger:hover {
+    border-color: rgba(0, 255, 136, 0.3);
+    background: rgba(0, 255, 136, 0.08);
 }
 
 .burger span {
     display: block;
-    width: 24px;
+    width: 18px;
     height: 2px;
     background: var(--white-muted);
     border-radius: 2px;
-    transition: all 0.3s ease;
+    transition: transform 0.35s ease, opacity 0.25s ease, background 0.25s ease;
 }
 
 .burgerOpen span:nth-child(1) {
@@ -132,38 +306,221 @@
     background: var(--green);
 }
 
-@media (max-width: 768px) {
+/* ---------- Mobile ---------- */
+.backdrop {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .shell {
+        justify-content: stretch;
+    }
+
+    .brandLogo {
+        width: 52px;
+        height: 52px;
+    }
+
+    .mobileBrand {
+        padding: 4px 6px 4px 2px;
+    }
+
+    .dock {
+        max-width: none;
+        justify-content: flex-end;
+        border-radius: 18px;
+        padding: 6px 8px 6px 10px;
+    }
+
+    .resumeOrb {
+        display: none;
+    }
+
+    .drawerResume {
+        display: block;
+        width: 100%;
+        margin-top: 16px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(0, 255, 136, 0.14);
+    }
+
+    .drawerResumeLink {
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+        margin: 0 !important;
+        border-radius: 14px !important;
+        padding: 14px 20px !important;
+    }
+
+    .drawerResumeIcon {
+        width: 18px;
+        height: 18px;
+        color: var(--green);
+    }
+
     .burger {
         display: flex;
+        z-index: 1003;
     }
 
     .links {
         position: fixed;
         top: 0;
-        right: -100%;
+        right: 0;
         bottom: 0;
-        width: 280px;
-        background: var(--black-soft);
+        width: min(300px, 88vw);
+        flex: none;
         flex-direction: column;
-        align-items: flex-start;
-        padding: 100px 32px 40px;
-        border-left: 1px solid var(--black-border);
-        transition: right 0.35s ease;
-        gap: 4px;
+        align-items: stretch;
+        justify-content: flex-start;
+        padding: 88px 20px 28px;
+        background: rgba(10, 10, 10, 0.97);
+        border-left: 1px solid rgba(0, 255, 136, 0.18);
+        box-shadow: -16px 0 48px rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        transform: translateX(105%);
+        transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+        gap: 6px;
+        z-index: 1002;
     }
 
     .links.open {
-        right: 0;
+        transform: translateX(0);
     }
 
-    .link {
-        font-size: 1.05rem;
-        padding: 12px 8px;
+    .navItem {
+        padding: 0;
+        border-radius: 14px;
+    }
+
+    .navItem:hover {
+        transform: none;
+    }
+
+    .itemInner {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 12px;
+        padding: 10px 12px;
         width: 100%;
+        box-sizing: border-box;
     }
 
-    .resumeBtn {
-        margin-left: 0;
-        margin-top: 12px;
+    .iconSlot {
+        width: 38px;
+        height: 38px;
+    }
+
+    .iconSvg {
+        width: 21px;
+        height: 21px;
+    }
+
+    .navItemLabel {
+        font-size: 0.95rem;
+        text-transform: none;
+        letter-spacing: 0.02em;
+        font-weight: 600;
+    }
+
+    .navItem.active .navItemLabel {
+        color: var(--green);
+    }
+
+    .navItem.active .iconSvg {
+        color: var(--green);
+    }
+
+    .backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 1001;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        cursor: pointer;
+        animation: backdropIn 0.35s ease forwards;
+    }
+}
+
+@keyframes backdropIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .backdrop {
+        animation: none;
+    }
+
+    .links {
+        transition: transform 0.01ms;
+    }
+
+    .navItem,
+    .navItem:hover,
+    .itemGlow,
+    .resumeOrb,
+    .resumeOrb:hover {
+        transition-duration: 0.01ms;
+    }
+
+    .navItem:hover {
+        transform: none;
+    }
+
+    .itemGlow {
+        filter: none;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+    .brandLogo {
+        width: 56px;
+        height: 56px;
+    }
+
+    .dock {
+        max-width: 100%;
+        padding-inline: 8px;
+    }
+
+    .navItem {
+        padding: 3px 5px;
+    }
+
+    .iconSlot {
+        width: 38px;
+        height: 38px;
+    }
+
+    .iconSvg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .navItemLabel {
+        font-size: 0.54rem;
+    }
+
+    .resumeOrb {
+        width: 40px;
+        height: 40px;
+    }
+
+    .resumeOrbIcon {
+        width: 18px;
+        height: 18px;
     }
 }

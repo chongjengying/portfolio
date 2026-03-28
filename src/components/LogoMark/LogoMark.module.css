@@ -1,0 +1,30 @@
+.svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.scanCell {
+  fill: #0a1411;
+}
+
+.scanLine {
+  stroke: #162822;
+}
+
+.ring {
+  stroke: var(--green);
+  filter: drop-shadow(0 0 4px rgba(0, 255, 136, 0.45));
+}
+
+.cjyText {
+  font-family: var(--font-main), 'Space Grotesk', system-ui, sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  fill: var(--green);
+  filter: drop-shadow(0 0 6px rgba(0, 255, 136, 0.55));
+}
+
+.reflection {
+  fill: var(--green);
+  opacity: 0.14;
+}

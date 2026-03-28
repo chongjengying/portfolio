@@ -6,6 +6,13 @@ const CONTACT_ITEMS = [
   { slug: 'email', icon: 'EM', label: 'Email', value: 'jengying0503@gmail.com', href: 'mailto:jengying0503@gmail.com' },
   { slug: 'phone', icon: 'PH', label: 'Phone', value: '011-2781 2878', href: 'tel:+601127812878' },
   { slug: 'github', icon: 'GH', label: 'GitHub', value: 'github.com/chongjengying', href: 'https://github.com/chongjengying' },
+  {
+    slug: 'linkedin',
+    icon: 'LI',
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/chongjengying',
+    href: 'https://www.linkedin.com/in/chongjengying',
+  },
   { slug: 'location', icon: 'LC', label: 'Location', value: 'Johor Bahru, Johor', href: 'https://maps.google.com/?q=Johor+Bahru+Johor' },
 ];
 
@@ -32,7 +39,7 @@ export default function Contact() {
           Let&apos;s Build <span>Reliable Solutions</span>
         </h2>
         <p className="section-subtitle">
-          I am open to software engineering and application support opportunities.
+          I welcome messages about roles, collaborations, and technical discussions.
         </p>
 
         <div className={styles.grid}>
@@ -51,7 +58,7 @@ export default function Contact() {
             <div className={styles.availability}>
               <span className="dot-green" />
               <span>
-                Available for <strong>full-time</strong> and <strong>select contract</strong> roles
+                Available for <strong>full-time</strong> and <strong>select contract</strong> roles.
               </span>
             </div>
           </div>

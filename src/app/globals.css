@@ -15,6 +15,8 @@
   --white-faint: #444444;
   --font-main: 'Space Grotesk', sans-serif;
   --font-code: 'Fira Code', monospace;
+  /* Fixed nav clearance for in-page anchors + scrollIntoView */
+  --nav-scroll-offset: 100px;
 }
 
 * {
@@ -24,8 +26,17 @@
 }
 
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-scroll-offset);
 }
 
 body {
@@ -60,7 +71,7 @@ body {
 }
 
 .section {
-  padding: 100px 0;
+  padding: 132px 0;
 }
 
 .section-label {
@@ -87,7 +98,7 @@ body {
   font-weight: 700;
   color: var(--white);
   line-height: 1.15;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .section-title span {
@@ -98,7 +109,7 @@ body {
   color: var(--white-dim);
   font-size: 1.05rem;
   max-width: 540px;
-  margin-bottom: 60px;
+  margin-bottom: 76px;
 }
 
 /* ---------- GLOWING CARD ---------- */
@@ -106,7 +117,7 @@ body {
   background: var(--black-card);
   border: 1px solid var(--black-border);
   border-radius: 16px;
-  padding: 28px;
+  padding: 40px;
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -118,8 +129,10 @@ body {
 
 /* ---------- BUTTON ---------- */
 .btn {
+  --btn-ease: cubic-bezier(0.34, 1.35, 0.64, 1);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 12px 28px;
   border-radius: 8px;
@@ -127,19 +140,46 @@ body {
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.25s ease;
   text-decoration: none;
   border: none;
+  position: relative;
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: center;
+  transition:
+    transform 0.42s var(--btn-ease),
+    box-shadow 0.42s var(--btn-ease),
+    background-color 0.32s ease,
+    border-color 0.32s ease,
+    color 0.28s ease,
+    filter 0.42s ease;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
 }
 
 .btn-primary {
   background: var(--green);
   color: var(--black);
 }
+
 .btn-primary:hover {
   background: var(--green-dim);
-  box-shadow: 0 0 24px var(--green);
-  transform: translateY(-2px);
+  transform: translate3d(0, -4px, 0) scale(1.045);
+  box-shadow:
+    0 0 32px rgba(0, 255, 136, 0.55),
+    0 0 64px rgba(0, 255, 136, 0.28),
+    0 14px 36px rgba(0, 0, 0, 0.45);
+  filter: brightness(1.05);
+}
+
+.btn-primary:active {
+  transform: translate3d(0, -1px, 0) scale(1.02);
+  box-shadow:
+    0 0 20px rgba(0, 255, 136, 0.35),
+    0 6px 20px rgba(0, 0, 0, 0.35);
+  transition-duration: 0.14s;
 }
 
 .btn-outline {
@@ -147,10 +187,46 @@ body {
   color: var(--green);
   border: 1px solid var(--green-border);
 }
+
 .btn-outline:hover {
   background: var(--green-glow);
   border-color: var(--green);
-  transform: translateY(-2px);
+  color: var(--green);
+  transform: translate3d(0, -4px, 0) scale(1.045);
+  box-shadow:
+    0 0 28px rgba(0, 255, 136, 0.4),
+    0 0 52px rgba(0, 255, 136, 0.15),
+    inset 0 0 24px rgba(0, 255, 136, 0.08);
+}
+
+.btn-outline:active {
+  transform: translate3d(0, -1px, 0) scale(1.02);
+  box-shadow:
+    0 0 16px rgba(0, 255, 136, 0.25),
+    inset 0 0 12px rgba(0, 255, 136, 0.06);
+  transition-duration: 0.14s;
+}
+
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:active {
+  transform: none;
+  filter: none;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.btn-primary:disabled,
+.btn-primary:disabled:hover {
+  background: var(--green);
+}
+
+.btn-outline:disabled,
+.btn-outline:disabled:hover {
+  background: transparent;
+  border-color: var(--green-border);
+  color: var(--green);
 }
 
 /* ---------- TAG / BADGE ---------- */
@@ -215,7 +291,10 @@ body {
     grid-template-columns: 1fr;
   }
   .section {
-    padding: 70px 0;
+    padding: 92px 0;
+  }
+  :root {
+    --nav-scroll-offset: 88px;
   }
 }
 
@@ -239,6 +318,29 @@ body {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition-duration: 0.01ms;
+    transition-property: background-color, border-color, color;
+  }
+
+  .btn:hover,
+  .btn:active {
+    transform: none;
+    filter: none;
+  }
+
+  .btn-primary:hover,
+  .btn-primary:active {
+    box-shadow: 0 0 0 1px var(--green-border);
+  }
+
+  .btn-outline:hover,
+  .btn-outline:active {
+    box-shadow: none;
+  }
 }
 
 /* ---------- SCANLINE OVERLAY ---------- */

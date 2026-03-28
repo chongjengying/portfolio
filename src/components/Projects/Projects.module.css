@@ -1,15 +1,136 @@
-.featuredGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-bottom: 56px;
+.liveStatusKey {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    margin-top: -24px;
+    margin-bottom: 44px;
+    font-size: 0.88rem;
+    color: var(--white-dim);
 }
 
-.featuredCard {
+.liveStatusKeyTitle {
+    font-family: var(--font-code);
+    color: var(--white-muted);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    margin-right: 4px;
+}
+
+.liveStatusKeyItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.liveStatusKeySep {
+    color: var(--white-faint);
+    font-family: var(--font-code);
+    user-select: none;
+}
+
+.statusDotLive,
+.statusDotDev {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.statusDotLive {
+    background: var(--green);
+    box-shadow: 0 0 12px rgba(0, 255, 136, 0.75);
+}
+
+.statusDotDev {
+    background: #ff4757;
+    box-shadow: 0 0 12px rgba(255, 71, 87, 0.65);
+}
+
+.cardTopLeft {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 0;
+}
+
+.cardStatusLive,
+.cardStatusDev {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-code);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.cardStatusLive {
+    color: var(--green);
+}
+
+.cardStatusDev {
+    color: #ff6b7a;
+}
+
+.projects .featuredGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 32px;
+    margin-bottom: 64px;
+}
+
+.projects .featuredCard {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
     background: linear-gradient(160deg, rgba(22, 22, 22, 0.96), rgba(16, 16, 16, 0.9));
+    position: relative;
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.45s ease,
+        border-color 0.35s ease;
+    border: 1px solid var(--black-border);
+    border: 1px solid color-mix(in srgb, var(--green-border) 42%, var(--black-border));
+    box-shadow:
+        0 0 0 1px rgba(0, 255, 136, 0.08),
+        0 10px 36px rgba(0, 0, 0, 0.5),
+        0 0 56px rgba(0, 255, 136, 0.08);
+}
+
+.projects .featuredCard:hover {
+    transform: translateY(-12px);
+    border-color: rgba(0, 255, 136, 0.55);
+    box-shadow:
+        0 0 0 1px rgba(0, 255, 136, 0.45),
+        0 22px 56px rgba(0, 0, 0, 0.55),
+        0 0 48px rgba(0, 255, 136, 0.24),
+        0 0 96px rgba(0, 255, 136, 0.12);
+}
+
+.projects .featuredCard:hover .cardMedia {
+    border-color: rgba(0, 255, 136, 0.22);
+    box-shadow: 0 0 24px rgba(0, 255, 136, 0.08);
+}
+
+.cardMedia {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    background: var(--black-border);
+    border: 1px solid rgba(0, 255, 136, 0.1);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.cardImage {
+    object-fit: cover;
 }
 
 .cardTop {
@@ -81,13 +202,74 @@
 .projectActions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 12px;
+    gap: 12px;
+    margin-top: 18px;
 }
 
 .actionBtn {
     padding: 8px 18px;
     font-size: 0.82rem;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+        transform 0.42s cubic-bezier(0.34, 1.35, 0.64, 1),
+        box-shadow 0.42s cubic-bezier(0.34, 1.35, 0.64, 1),
+        background-color 0.32s ease,
+        border-color 0.32s ease,
+        color 0.28s ease,
+        filter 0.42s ease;
+}
+
+.actionBtnLabel {
+    position: relative;
+    z-index: 2;
+}
+
+.actionBtnPrimary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: -100%;
+    width: 55%;
+    background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.22) 45%,
+        transparent 80%
+    );
+    transform: skewX(-18deg);
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.actionBtnPrimary:hover::before {
+    transform: skewX(-18deg) translateX(320%);
+}
+
+.actionBtnPrimary:hover {
+    transform: translateY(-4px) scale(1.045);
+    box-shadow:
+        0 0 36px rgba(0, 255, 136, 0.52),
+        0 0 72px rgba(0, 255, 136, 0.24),
+        0 14px 36px rgba(0, 0, 0, 0.42);
+    filter: brightness(1.06);
+}
+
+.actionBtnOutline:hover {
+    transform: translateY(-4px) scale(1.045);
+    box-shadow:
+        0 0 30px rgba(0, 255, 136, 0.38),
+        0 0 56px rgba(0, 255, 136, 0.14),
+        inset 0 0 22px rgba(0, 255, 136, 0.09);
+}
+
+.actionBtnPrimary:active,
+.actionBtnOutline:active {
+    transform: translateY(-1px) scale(1.02);
+    filter: none;
+    transition-duration: 0.14s;
 }
 
 .otherHeading {
@@ -133,7 +315,6 @@
 
 @media (max-width: 900px) {
 
-    .featuredGrid,
     .otherGrid {
         grid-template-columns: 1fr;
     }
@@ -141,8 +322,29 @@
 
 @media (min-width: 641px) and (max-width: 900px) {
 
-    .featuredGrid,
     .otherGrid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .projects .featuredCard,
+    .projects .featuredCard:hover {
+        transition-duration: 0.01ms;
+        transform: none;
+    }
+
+    .actionBtn,
+    .actionBtn:hover,
+    .actionBtn:active {
+        transition-duration: 0.01ms;
+        transform: none;
+        filter: none;
+        box-shadow: none;
+    }
+
+    .actionBtnPrimary::before {
+        display: none;
     }
 }

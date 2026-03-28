@@ -63,6 +63,12 @@ const TOOLS = [
   'Minecraft Education',
 ];
 
+function strengthLabel(level: number): string {
+  if (level >= 87) return 'Strong';
+  if (level >= 80) return 'Proficient';
+  return 'Familiar';
+}
+
 const TECH_ITEMS = [
   { src: '/logos/react.png', label: 'React' },
   { src: '/logos/nextjs1.png', label: 'Next.js' },
@@ -105,7 +111,8 @@ export default function Skills() {
             Engineering <span>Stack</span>
           </h2>
           <p className="section-subtitle">
-            Core technologies and operational capabilities used in enterprise logistics software environments.
+            From production support and enterprise logistics apps to side projects—the stack I use to build, ship, and
+            keep systems reliable.
           </p>
         </div>
 
@@ -125,7 +132,7 @@ export default function Skills() {
                   <div key={skill.name} className={styles.barItem}>
                     <div className={styles.barMeta}>
                       <span className={styles.barName}>{skill.name}</span>
-                      <span className={styles.barPct}>{skill.level}%</span>
+                      <span className={styles.barStrength}>{strengthLabel(skill.level)}</span>
                     </div>
                     <div className={styles.barTrack}>
                       <div
